@@ -1,0 +1,6 @@
+print("Wecome to the Food Store Generator")
+food_sell = input("What is food your store sell?")
+print(food_sell)
+your_name = input("What is your name?")
+print(your_name)
+print("The store name is : " + food_sell + " " + your_name)
