@@ -44,3 +44,5 @@ if user_choice <= 2 and user_choice >= 0:
         print("You lose!")
     else:
         print("Draw!")
+else:
+    print("You choice not valid!, You lose!")
