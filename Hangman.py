@@ -49,7 +49,7 @@ states = [
             |
 = = = = = = =            
     """,
-        """
+    """
     + - - - +
     |       |
     O       |
@@ -58,8 +58,7 @@ states = [
             |
             |
 = = = = = = =            
-    """
-    ,
+    """,
     """
     + - - - +
     |       |
@@ -72,6 +71,7 @@ states = [
     """,
 ]
 
+states.reverse()
 key_word = rd.choice(lst_word)
 
 generator_word = ['_' for _ in range(len(key_word))]
@@ -85,7 +85,7 @@ while not end_of_games:
             generator_word[i] = player_choice
     print(" ".join(generator_word))
     if player_choice not in key_word:
-        print(states[6-life])
+        print(states[life-1])
         life -= 1
     if '_' not in generator_word:
         end_of_games = True
