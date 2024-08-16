@@ -49,6 +49,4 @@ def game():
         if attempts == 0:
             should_continue = False
             print("You lose! Guess miss a number")
-
-
 game()
