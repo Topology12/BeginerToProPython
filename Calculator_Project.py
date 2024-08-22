@@ -44,7 +44,7 @@ def program_running():
         result = calculator(first_number, choose, next_number)
         print(f"{first_number} {choose} {next_number} = {result}")
         should_calc = input(
-            f"Type 'y' to coutinue calculator {result}. Or type 'n' to start new calculator")
+            f"Type 'y' to continue calculator {result}. Or type 'n' to start new calculator")
         os.system('cls')
         if should_calc == 'n':
             result = 0
