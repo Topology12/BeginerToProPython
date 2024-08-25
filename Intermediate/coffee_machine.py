@@ -34,7 +34,8 @@ coin_value = {
 }
 
 
-def print_menu():
+def print_menu() -> None:
+    """Print the menu"""
     print("""
 Menu: 
 1 : Order Coffee
@@ -43,12 +44,8 @@ Menu:
     """)
 
 
-def off_machine():
-    global on_machine
-    on_machine = False
-
-
 def check_order(water_need, milk_need, sugar_need):
+    """Check ingredients of machine and return False if one of them not available """
     if water_need > coffee_machine['water']:
         return False
     if milk_need > coffee_machine['milk']:
@@ -59,6 +56,7 @@ def check_order(water_need, milk_need, sugar_need):
 
 
 def check_money(amount):
+    """Check amount of coffee with money of customers"""
     print('Please insert coin')
     total = int(input("How many quarters ?")) * 0.25
     total += int(input("How many dimes ?")) * 0.1
@@ -70,6 +68,7 @@ def check_money(amount):
 
 
 def order():
+    """Process order"""
     coffee_type = input("What would you like? (Espresso, Latte, Cappuccino) ").lower()
     water_need = coffee_category[coffee_type]['water']
     milk_need = coffee_category[coffee_type]['milk']
@@ -88,30 +87,34 @@ def order():
 
 
 def report():
+    """Report the state of the machine"""
     print(f"Water: {coffee_machine['water']}")
     print(f"Milk:  {coffee_machine['milk']}")
     print(f"Sugar: {coffee_machine['sugar']}")
     print(f"Money: {coffee_machine['money']}")
 
 
+ON_MACHINE = True
+
+
 def on_coffee_machine():
-    MENU = {
+    """Machine working"""
+    menu = {
         "1": order,
         "2": report,
-        "3": off_machine
+        "3": None
     }
-
-    global on_machine
-    on_machine = True
-
-    while on_machine:
+    while ON_MACHINE:
         print_menu()
         select = input("What is your requirements?")
-        while select not in MENU:
+        while select not in menu:
             print_menu()
-            select = input(f"Please choice in menu")
-        user_choice = MENU[select]
+            select = input("Please choice in menu")
+        if select == "3":
+            break
+        user_choice = menu[select]
         user_choice()
 
 
+# Start machine
 on_coffee_machine()
