@@ -1,3 +1,5 @@
+"""Project Coffee Machine"""
+
 coffee_machine = {
     'water': 300,
     'milk': 250,
