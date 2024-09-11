@@ -55,6 +55,14 @@ class Snake:
         if self.segments[0].heading() != 180:
             self.segments[0].setheading(0)
 
+    def reset_snake(self):
+        for seg in self.segments:
+            seg.goto(1000, 1000)
+        self.segments.clear()
+        self.render_snake_body()
+
+
+
 
 class Food(Turtle):
 
@@ -75,6 +83,8 @@ class Food(Turtle):
 class ScoreBoard(Turtle):
     def __init__(self):
         super().__init__()
+        self.highscore = 0
+        self.read_highscore_in_file()
         self.color("white")
         self.score = 0
         self.penup()
@@ -83,7 +93,8 @@ class ScoreBoard(Turtle):
         self.update_score()
 
     def update_score(self):
-        self.write(f"Score: {self.score}", align="center", font=("Courier", 20, "normal"))
+        self.clear()
+        self.write(f"Score: {self.score} High Score: {self.highscore}", align="center", font=("Courier", 20, "normal"))
 
     def increase_score(self):
         self.score += 1
@@ -93,6 +104,21 @@ class ScoreBoard(Turtle):
     def game_over(self):
         self.goto(0, 0)
         self.write("Game Over", align="center", font=("Arial", 16, "normal"))
+
+    def reset(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
+            with open("highscore.txt", "w") as f:
+                f.write(str(self.highscore))
+        self.score = 0
+        self.update_score()
+
+    def read_highscore_in_file(self):
+        with open("highscore.txt", "r") as f:
+            score = f.read()
+            if score != '':
+                self.highscore = int(score)
+
 
 
 snake = Snake()
@@ -113,14 +139,14 @@ while game_is_on:
         scoreboard.increase_score()
         snake.extend()
     if snake.segments[0].xcor() > 290 or snake.segments[0].xcor() < -290:
-        scoreboard.game_over()
-        game_is_on = False
+        scoreboard.reset()
+        snake.reset_snake()
     if snake.segments[0].ycor() > 290 or snake.segments[0].ycor() < -290:
-        scoreboard.game_over()
-        game_is_on = False
+        scoreboard.reset()
+        snake.reset_snake()
     for segment in snake.segments[1:]:
         if snake.segments[0].distance(segment) < 10:
-            scoreboard.game_over()
-            game_is_on = False
+            scoreboard.reset()
+            snake.reset_snake()
 
 screen.exitonclick()
